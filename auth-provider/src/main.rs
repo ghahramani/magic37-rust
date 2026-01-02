@@ -1,3 +1,4 @@
+mod db;
 mod domain;
 mod service;
 mod web;
