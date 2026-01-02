@@ -1,0 +1,37 @@
+[web]
+port = 8080
+graceful = true
+
+[web.middlewares]
+static = { enable = true }
+compression = { enable = true }
+logger = { enable = true, level = "warn" }
+catch_panic = { enable = true }
+timeout_request = { enable = true, timeout = 30000 }
+cors = { enable = true, allow_origins = [
+    "*",
+], allow_headers = [
+    "Authentication",
+], allow_methods = [
+    "GET",
+    "POST",
+], max_age = 60 }
+
+[logger]
+enable = true
+level = "info"
+time_style = "local"
+time_pattern = "%Y-%m-%d %H:%M:%S"
+with_fields = [
+    "thread_id",
+    "thread_name",
+    "line_number",
+    "internal_errors",
+]
+override_filter = "info,tower_http::trace=debug"
+
+[logger.file]
+enable = true
+
+[custom]
+user_info_detail = "hello custom config"

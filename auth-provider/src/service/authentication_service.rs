@@ -1,15 +1,12 @@
 use crate::domain::user::User;
 use chrono::Utc;
+use spring::plugin::Service;
 use uuid::Uuid;
 
-#[derive(Clone)]
+#[derive(Clone, Service)]
 pub struct AuthenticationService {}
 
 impl AuthenticationService {
-    pub fn new() -> Self {
-        Self {}
-    }
-
     pub fn user_current(&self, id: Uuid) -> User {
         User {
             id,

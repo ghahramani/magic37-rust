@@ -4,7 +4,11 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-actix-web = "4"
+#actix-web = "4"
 serde = { version = "1.0", features = ["derive"] }
 chrono = { version = "0.4", features = ["serde"] }
 uuid = { version = "1", features = ["serde", "v4"] }
+spring = "0.4"
+spring-web = "0.4"
+# The spring-rs project uses the tokio asynchronous runtime by default
+tokio = "1"

@@ -1,12 +1,11 @@
 use crate::web::rest_model::current_user_response_rest_model::CurrentUserResponseRestModel;
-use actix_web::{HttpRequest, HttpResponse, Responder};
+use spring_web::axum::response::{IntoResponse, Response};
+use spring_web::axum::Json;
 
 pub mod current_user_response_rest_model;
 
-impl Responder for CurrentUserResponseRestModel {
-    type Body = actix_web::body::BoxBody;
-
-    fn respond_to(self, _req: &HttpRequest) -> HttpResponse<Self::Body> {
-        HttpResponse::Ok().json(self)
+impl IntoResponse for CurrentUserResponseRestModel {
+    fn into_response(self) -> Response {
+        Json(self).into_response()
     }
 }
