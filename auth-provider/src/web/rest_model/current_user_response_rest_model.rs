@@ -1,3 +1,4 @@
+use actix_web::{HttpRequest, HttpResponse, Responder};
 use chrono::{DateTime, Utc};
 use serde::Serialize;
 use uuid::Uuid;
@@ -10,4 +11,12 @@ pub struct CurrentUserResponseRestModel {
     pub email: String,
     pub modified_at: DateTime<Utc>,
     pub created_at: DateTime<Utc>,
+}
+
+impl Responder for CurrentUserResponseRestModel {
+    type Body = actix_web::body::BoxBody;
+
+    fn respond_to(self, _req: &HttpRequest) -> HttpResponse<Self::Body> {
+        HttpResponse::Ok().json(self)
+    }
 }
