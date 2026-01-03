@@ -1,9 +1,7 @@
-use crate::web::rest::authentication_resource::auth_scope;
-use actix_web::web::scope;
-use actix_web::Scope;
+pub mod authentication;
 
-pub mod authentication_resource;
+use actix_web::web;
 
-pub fn all_rest() -> Scope {
-    scope("").service(auth_scope())
+pub fn routes(cfg: &mut web::ServiceConfig) {
+    cfg.configure(authentication::routes);
 }

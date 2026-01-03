@@ -1,1 +1,1 @@
-pub mod current_user_response_rest_model;
+pub mod current_user_response;
