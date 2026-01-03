@@ -1,4 +1,5 @@
 pub mod authentication;
+pub mod model;
 
 use actix_web::web;
 

@@ -5,21 +5,34 @@ metadata:
 build:
   artifacts:
     - image: auth-provider
-      context: code
+      context: .
       docker:
         dockerfile: Dockerfile
 profiles:
   - name: local
     manifests:
       helm:
+        flags:
+          install:
+            - --atomic
+          upgrade:
+            - --atomic
         releases:
           - name: auth-provider
             chartPath: chart
+            wait: true
             valuesFiles:
               - chart/values.yaml
               - chart/values-local.yaml
     deploy:
-      kubectl: {}
+      statusCheckDeadlineSeconds: 700
+      statusCheck: true
+      helm:
+        flags:
+          install:
+            - --atomic
+          upgrade:
+            - --atomic
   - name: dev
     manifests:
       helm:

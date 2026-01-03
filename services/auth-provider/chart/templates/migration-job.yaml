@@ -13,21 +13,14 @@ spec:
         - name: flyway
           image: flyway/flyway:latest
           imagePullPolicy: IfNotPresent
+          args: ["migrate"]
           env:
             - name: FLYWAY_URL
-              value: 'jdbc:{{ .Values.env.DATABASE_URL | replace "postgres://" "postgresql://" }}'
+              value: 'jdbc:postgresql://db:5432/magic37'
             - name: FLYWAY_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "auth-provider.fullname" . }}-db
-                  key: username
-                  optional: true
+              value: 'postgres'
             - name: FLYWAY_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "auth-provider.fullname" . }}-db
-                  key: password
-                  optional: true
+              value: 'password'
           # A quick hack to parse user/pass from URL if not using secrets, 
           # but for now let's assume we just pass the full URL or handle it simpler.
           # Flyway supports FLYWAY_URL with user/pass in it appropriately if format matches.

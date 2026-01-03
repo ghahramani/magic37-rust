@@ -18,6 +18,7 @@ pub struct CurrentUserResponse {
 
 impl Responder for CurrentUserResponse {
     type Body = BoxBody;
+
     fn respond_to(self, _req: &HttpRequest) -> HttpResponse<Self::Body> {
         HttpResponse::Ok().json(self)
     }

@@ -3,8 +3,8 @@ kind: Config
 metadata:
   name: magic37-local
 requires:
-  - path: skaffold.yaml
   - path: services/postgres/skaffold.yaml
+  - path: skaffold.yaml
 profiles:
   - name: local
     patches: []

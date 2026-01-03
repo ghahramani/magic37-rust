@@ -1,5 +1,4 @@
 mod rest;
-mod rest_model;
 
 use crate::service::ServiceModule;
 use actix_web::web::{scope, Data};
