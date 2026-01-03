@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "auth-provider.fullname" . }}-migration
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      containers:
+        - name: flyway
+          image: flyway/flyway:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: FLYWAY_URL
+              value: 'jdbc:{{ .Values.env.DATABASE_URL | replace "postgres://" "postgresql://" }}'
+            - name: FLYWAY_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "auth-provider.fullname" . }}-db
+                  key: username
+                  optional: true
+            - name: FLYWAY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "auth-provider.fullname" . }}-db
+                  key: password
+                  optional: true
+          # A quick hack to parse user/pass from URL if not using secrets, 
+          # but for now let's assume we just pass the full URL or handle it simpler.
+          # Flyway supports FLYWAY_URL with user/pass in it appropriately if format matches.
+          # However, Rust's Postgres URL is `postgres://` while JDBC expects `jdbc:postgresql://`.
+          # I added a replace in the value above.
+          volumeMounts:
+            - name: migration-scripts
+              mountPath: /flyway/sql
+      volumes:
+        - name: migration-scripts
+          configMap:
+            name: {{ include "auth-provider.fullname" . }}-migration
+      restartPolicy: Never

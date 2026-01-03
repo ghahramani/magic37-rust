@@ -1,0 +1,13 @@
+apiVersion: skaffold/v4beta1
+kind: Config
+metadata:
+  name: postgres
+profiles:
+  - name: local
+    manifests:
+      helm:
+        releases:
+          - name: postgres
+            chartPath: chart
+            valuesFiles:
+              - chart/values.yaml

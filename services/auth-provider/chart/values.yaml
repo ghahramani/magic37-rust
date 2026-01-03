@@ -1,0 +1,13 @@
+replicaCount: 1
+
+image:
+  repository: auth-provider
+  pullPolicy: IfNotPresent
+  tag: ""
+
+service:
+  type: ClusterIP
+  port: 8080
+
+env:
+  DATABASE_URL: "postgres://postgres:password@localhost:5432/magic37"

@@ -1,0 +1,38 @@
+apiVersion: skaffold/v4beta1
+kind: Config
+metadata:
+  name: auth-provider
+build:
+  artifacts:
+    - image: auth-provider
+      context: code
+      buildpacks:
+        builder: paketobuildpacks/builder:base
+profiles:
+  - name: local
+    manifests:
+      helm:
+        releases:
+          - name: auth-provider
+            chartPath: chart
+            valuesFiles:
+              - chart/values.yaml
+              - chart/values-local.yaml
+  - name: dev
+    manifests:
+      helm:
+        releases:
+          - name: auth-provider
+            chartPath: chart
+            valuesFiles:
+              - chart/values.yaml
+              - chart/values-dev.yaml
+  - name: prod
+    manifests:
+      helm:
+        releases:
+          - name: auth-provider
+            chartPath: chart
+            valuesFiles:
+              - chart/values.yaml
+              - chart/values-prod.yaml

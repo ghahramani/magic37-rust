@@ -1,0 +1,14 @@
+fullnameOverride: "db"
+
+image:
+  repository: postgres
+  tag: "15-alpine"
+  pullPolicy: IfNotPresent
+
+postgresql:
+  username: postgres
+  password: password
+  database: magic37
+
+service:
+  port: 5432

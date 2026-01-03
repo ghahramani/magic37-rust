@@ -1,0 +1,13 @@
+apiVersion: skaffold/v4beta1
+kind: Config
+metadata:
+  name: magic37
+requires:
+  - path: services/auth-provider/skaffold.yaml
+profiles:
+  - name: local
+    patches: []
+  - name: dev
+    patches: []
+  - name: prod
+    patches: []
