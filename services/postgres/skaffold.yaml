@@ -11,3 +11,5 @@ profiles:
             chartPath: chart
             valuesFiles:
               - chart/values.yaml
+    deploy:
+      kubectl: {}

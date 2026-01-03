@@ -6,8 +6,8 @@ build:
   artifacts:
     - image: auth-provider
       context: code
-      buildpacks:
-        builder: paketobuildpacks/builder:base
+      docker:
+        dockerfile: Dockerfile
 profiles:
   - name: local
     manifests:
@@ -18,6 +18,8 @@ profiles:
             valuesFiles:
               - chart/values.yaml
               - chart/values-local.yaml
+    deploy:
+      kubectl: {}
   - name: dev
     manifests:
       helm:
