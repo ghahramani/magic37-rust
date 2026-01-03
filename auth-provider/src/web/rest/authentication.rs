@@ -3,13 +3,11 @@ use crate::service::user::UserService;
 use crate::web::rest_model::current_user_response::CurrentUserResponse;
 use actix_web::web::{scope, Data};
 use actix_web::{get, post, web, HttpResponse, Responder};
-use std::sync::Arc;
+
 use uuid::Uuid;
 
 #[get("/current")]
-async fn user_current(
-    service: Data<Arc<dyn UserService>>,
-) -> Result<CurrentUserResponse, ServiceError> {
+async fn user_current(service: Data<dyn UserService>) -> Result<CurrentUserResponse, ServiceError> {
     let user = service
         .find_by_id(Uuid::new_v4())
         .await
