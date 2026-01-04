@@ -1,2 +1,0 @@
-env:
-  DATABASE_URL: "postgres://postgres:password@db:5432/magic37"
