@@ -6,7 +6,7 @@ COPY code/ .
 # Build dependencies - this is the caching Docker layer!
 RUN cargo build --release
 
-FROM scratch
+FROM debian:stable-slim
 
 COPY --from=builder /usr/src/app/target/release/auth-provider /bin/auth-provider
 

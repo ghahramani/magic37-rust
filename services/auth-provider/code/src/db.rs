@@ -1,7 +1,13 @@
 use sea_orm::{Database, DatabaseConnection};
 
 pub async fn connect() -> DatabaseConnection {
-    let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL not set");
+    let host = std::env::var("DB_HOST").expect("DB_HOST not set");
+    let port = std::env::var("DB_PORT").expect("DB_PORT not set");
+    let user = std::env::var("DB_USER").expect("DB_USER not set");
+    let password = std::env::var("DB_PASSWORD").expect("DB_PASSWORD not set");
+    let name = std::env::var("DB_NAME").expect("DB_NAME not set");
+    
+    let database_url = format!("postgres://{}:{}@{}:{}/{}", user, password, host, port, name);
     
     let mut retry_count = 0;
     loop {

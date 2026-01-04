@@ -18,9 +18,15 @@ spec:
             - name: FLYWAY_URL
               value: 'jdbc:postgresql://db:5432/magic37'
             - name: FLYWAY_USER
-              value: 'postgres'
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "auth-provider.fullname" . }}-secret
+                  key: flyway-user
             - name: FLYWAY_PASSWORD
-              value: 'password'
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "auth-provider.fullname" . }}-secret
+                  key: flyway-password
           # A quick hack to parse user/pass from URL if not using secrets, 
           # but for now let's assume we just pass the full URL or handle it simpler.
           # Flyway supports FLYWAY_URL with user/pass in it appropriately if format matches.
